@@ -1,0 +1,14 @@
+{
+  "name": "ukrainizator-sever",
+  "version": "1.0.0",
+  "description": "BackEnd for ukrainizator project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "author": "Romanenko Vitalii",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
