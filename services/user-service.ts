@@ -20,9 +20,10 @@ class UserService {
      * Registers a new user
      * @param email - New user email
      * @param password - New user password
+     * @param avatar - img link (not required)
      * @returns {Promise<UserData>} - created new user
      */
-    async registration(email: string, password: string): Promise<UserData> {
+    async registration(email: string, password: string, avatar?: string): Promise<UserData> {
         const candidate: IUser | null = await UserModel.findOne({email})
         if (candidate) {
             throw ApiError.BadRequest(`User: ${email} is already exist`)
@@ -30,7 +31,7 @@ class UserService {
         const hashPassword: string = await bcrypt.hash(password, 3)
         const activationLink: string = await uuid.v4()
 
-        const user: IUser = await UserModel.create({email, password: hashPassword, activationLink})
+        const user: IUser = await UserModel.create({email, password: hashPassword, activationLink, avatar})
 
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
 
