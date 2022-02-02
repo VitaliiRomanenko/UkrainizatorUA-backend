@@ -12,4 +12,7 @@ export default class ApiError extends Error {
     static BadRequest(message: string, errors: any[] = []): ApiError {
         return new ApiError(400, message, errors)
     }
+    static NotAccess(): ApiError {
+        return new ApiError(401, "Not access")
+    }
 }

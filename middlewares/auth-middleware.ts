@@ -1,10 +1,10 @@
 import {NextFunction, Request, Response} from "express";
 import ApiError from "../exceptions/api-error";
-import {UserData} from "../services/user-service";
 import tokenService from "../services/token-service";
+import UserDto from "../dtos/user-dto";
 
 export interface IGetUserAuthInfoRequest extends Request{
-    user?: UserData
+    user?: UserDto
 }
 
 export default function (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) {
@@ -17,7 +17,7 @@ export default function (req: IGetUserAuthInfoRequest, res: Response, next: Next
         if (!accessToken){
             return next(ApiError.UnauthorizedError())
         }
-        const userData: UserData | null = tokenService.validateAccessToken(accessToken)
+        const userData: UserDto | null = tokenService.validateAccessToken(accessToken)
         if (!userData){
             return next(ApiError.UnauthorizedError())
         }

@@ -1,11 +1,11 @@
 import errorMiddleware from "./middlewares/error-middleware";
+import router from "./router";
 
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
-const router = require('./router/index')
 
 const app = express()
 const PORT: string = process.env.PORT || "5000"

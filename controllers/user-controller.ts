@@ -98,7 +98,10 @@ class UserController {
 
     async getUsers(req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) {
         try {
-            const users: IUser[] = await userService.getAllUsers()
+            if (!req.user) {
+                return next(ApiError.UnauthorizedError())
+            }
+            const users: IUser[] = await userService.getAllUsers(req.user.role)
             res.json(users)
         } catch (e) {
             next(e)

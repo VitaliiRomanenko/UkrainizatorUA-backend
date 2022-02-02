@@ -1,8 +1,7 @@
 import TokenModel from "../models/token-model";
 import tokenModel, {IToken} from "../models/token-model";
-import {IUserDto} from "../dtos/user-dto";
+import UserDto, {IUserDto} from "../dtos/user-dto";
 import {DeleteResult} from "mongodb";
-import {UserData} from "./user-service";
 
 const jwt = require('jsonwebtoken')
 
@@ -26,16 +25,16 @@ class TokenService implements ITokenService {
             refreshToken
         }
     }
-    validateAccessToken(token: string): UserData | null{
+    validateAccessToken(token: string): UserDto | null{
         try{
-            return jwt.verify(token, process.env.JWT_ACCESS_SECRET)
+            return jwt.verify(token, process.env.JWT_ACCESS_SECRET,  {algorithms: ['HS256']})
         }catch (e){
             return null
         }
     }
-    validateRefreshToken(token: string): UserData | null{
+    validateRefreshToken(token: string): UserDto | null{
         try{
-            return jwt.verify(token, process.env.JWT_REFRESH_SECRET)
+            return jwt.verify(token, process.env.JWT_REFRESH_SECRET, {algorithms: ['HS256']})
         }catch (e){
             return null
         }

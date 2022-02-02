@@ -83,14 +83,17 @@ class UserService {
         if(!userData || !tokenFromDB){
             throw ApiError.UnauthorizedError()
         }
-        const user:IUser | null = await UserModel.findById(userData.user.id)
+        const user:IUser | null = await UserModel.findById(userData.id)
         const userDto: UserDto = new UserDto(user!)
         const tokens = TokenService.generateTokens({...userDto})
         await TokenService.saveToken(userDto.id, tokens.refreshToken)
         return {tokens, user: userDto}
     }
 
-    async getAllUsers(): Promise<IUser[]>{
+    async getAllUsers(role: string): Promise<IUser[]>{
+        if(role !== "admin"){
+            throw ApiError.NotAccess()
+        }
         return UserModel.find()
     }
 }
