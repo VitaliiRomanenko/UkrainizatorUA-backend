@@ -1,9 +1,9 @@
 import UserModel, {IUser} from "../models/user-model";
-import TokenService, {Tokens} from "./token-service";
+import TokenService from "./token-service";
+import tokenService, {Tokens} from "./token-service";
 import UserDto, {IUserDto} from "../dtos/user-dto";
 import mailService from "./mail-service";
 import ApiError from "../exceptions/api-error";
-import tokenService from "./token-service";
 import {DeleteResult} from "mongodb";
 import {IToken} from "../models/token-model";
 
@@ -71,6 +71,14 @@ class UserService {
         return {tokens, user: userDto}
     }
 
+    async getUser(userId: string): Promise<UserDto> {
+        const user: IUser | null = await UserModel.findOne({_id: userId})
+        if (!user) {
+            throw ApiError.BadRequest("Unknown user")
+        }
+        return new UserDto(user)
+    }
+
     async logout(refreshToken: string): Promise<DeleteResult> {
         return await tokenService.removeToken(refreshToken)
     }
@@ -81,18 +89,18 @@ class UserService {
         }
         const userData = tokenService.validateRefreshToken(refreshToken)
         const tokenFromDB: IToken | null = await tokenService.findToken(refreshToken)
-        if(!userData || !tokenFromDB){
+        if (!userData || !tokenFromDB) {
             throw ApiError.UnauthorizedError()
         }
-        const user:IUser | null = await UserModel.findById(userData.id)
+        const user: IUser | null = await UserModel.findById(userData.id)
         const userDto: UserDto = new UserDto(user!)
         const tokens = TokenService.generateTokens({...userDto})
         await TokenService.saveToken(userDto.id, tokens.refreshToken)
         return {tokens, user: userDto}
     }
 
-    async getAllUsers(role: string): Promise<IUser[]>{
-        if(role !== "admin"){
+    async getAllUsers(role: string): Promise<IUser[]> {
+        if (role !== "admin") {
             throw ApiError.NotAccess()
         }
         return UserModel.find()

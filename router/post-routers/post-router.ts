@@ -7,5 +7,6 @@ const router: Router = Router()
 
 router.post('/create', authMiddleware, PostController.createPost)
 router.get('/', PostController.getAllPosts)
+router.get('/:post', PostController.getPost)
 
 export default router

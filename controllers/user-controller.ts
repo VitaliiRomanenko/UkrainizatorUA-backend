@@ -6,6 +6,7 @@ import ApiError from "../exceptions/api-error";
 import {DeleteResult} from "mongodb";
 import {IUser} from "../models/user-model";
 import { IGetUserAuthInfoRequest } from "../middlewares/auth-middleware";
+import UserDto from "../dtos/user-dto";
 
 class UserController {
     async registration(req: Request, res: Response, next: NextFunction) {
@@ -107,6 +108,17 @@ class UserController {
             next(e)
         }
     }
+
+    async getUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId:string = req.params.user;
+            const userData: UserDto = await userService.getUser(userId)
+            return res.json(userData)
+        } catch (e) {
+            next(e)
+        }
+    }
+
 }
 
 export default new UserController()

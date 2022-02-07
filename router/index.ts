@@ -4,7 +4,7 @@ import postRouter from "./post-router";
 
 const router: Router = Router()
 
-router.use('/user', userRouter)
-router.use('/post', postRouter)
+router.use('/users', userRouter)
+router.use('/posts', postRouter)
 
 export default router
