@@ -1,4 +1,5 @@
 import nodemailer, {Transporter} from 'nodemailer'
+require('dotenv').config()
 
 class MailService {
     private transporter: Transporter
@@ -15,7 +16,6 @@ class MailService {
     }
 
     async sendActivationMail(to: string, link: string): Promise<void> {
-
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
