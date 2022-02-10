@@ -14,8 +14,9 @@ class CategoryService {
         const category: ICategory = await CategoryModel.create({name, author: author.id})
         return new CategoryDto(category)
     }
-    async getAllCategory(): Promise<ICategory[]> {
-        return CategoryModel.find()
+    async getAllCategory(): Promise<CategoryDto[]> {
+        const result: ICategory[] = await CategoryModel.find()
+        return result.map(item => new CategoryDto(item))
     }
 
 }

@@ -99,11 +99,12 @@ class UserService {
         return {tokens, user: userDto}
     }
 
-    async getAllUsers(role: string): Promise<IUser[]> {
+    async getAllUsers(role: string): Promise<IUserDto[]> {
         if (role !== "admin") {
             throw ApiError.NotAccess()
         }
-        return UserModel.find()
+        const findData: IUser[] = await UserModel.find()
+        return findData.map(item => new UserDto(item))
     }
 }
 

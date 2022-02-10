@@ -1,12 +1,11 @@
-import userService, {UserData} from "../services/user-service";
-import {Request, Response, NextFunction} from "express";
-import UserService from "../services/user-service";
+import userService from "../services/user-service";
+import UserService, {UserData} from "../services/user-service";
+import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
 import ApiError from "../exceptions/api-error";
 import {DeleteResult} from "mongodb";
-import {IUser} from "../models/user-model";
-import { IGetUserAuthInfoRequest } from "../middlewares/auth-middleware";
-import UserDto from "../dtos/user-dto";
+import {IGetUserAuthInfoRequest} from "../middlewares/auth-middleware";
+import UserDto, {IUserDto} from "../dtos/user-dto";
 
 class UserController {
     async registration(req: Request, res: Response, next: NextFunction) {
@@ -102,7 +101,7 @@ class UserController {
             if (!req.user) {
                 return next(ApiError.UnauthorizedError())
             }
-            const users: IUser[] = await userService.getAllUsers(req.user.role)
+            const users: IUserDto[] = await userService.getAllUsers(req.user.role)
             res.json(users)
         } catch (e) {
             next(e)

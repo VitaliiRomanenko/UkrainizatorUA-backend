@@ -4,7 +4,6 @@ import {IGetUserAuthInfoRequest} from "../middlewares/auth-middleware";
 import MemberDto from "../dtos/member-dto";
 import MemberService from "../services/member-service";
 import {DeleteResult} from "mongodb";
-import {IMemberSchema} from "../models/member-model";
 
 class MemberController {
     async createNewMember(req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) {
@@ -32,7 +31,7 @@ class MemberController {
             if(!user){
                 return next(ApiError.BadRequest("Invalid user"))
             }
-            const members: IMemberSchema[] = await MemberService.getAllUserMembers(user)
+            const members: MemberDto[] = await MemberService.getAllUserMembers(user)
             res.json(members)
         } catch (e) {
             next(e)
@@ -44,7 +43,7 @@ class MemberController {
             if(!post){
                 return next(ApiError.BadRequest("Invalid user"))
             }
-            const members: IMemberSchema[] = await MemberService.getAllPostMembers(post)
+            const members: MemberDto[] = await MemberService.getAllPostMembers(post)
             res.json(members)
         } catch (e) {
             next(e)

@@ -15,12 +15,14 @@ class MemberService {
         return new MemberDto(member)
     }
 
-    async getAllUserMembers(userId: string): Promise<IMemberSchema[]> {
-        return MemberModel.find({member: userId})
+    async getAllUserMembers(userId: string): Promise<MemberDto[]> {
+        const result: IMemberSchema[] = await MemberModel.find({member: userId})
+        return result.map(item => new MemberDto(item))
     }
 
-    async getAllPostMembers(postId: string): Promise<IMemberSchema[]> {
-        return MemberModel.find({post: postId})
+    async getAllPostMembers(postId: string): Promise<MemberDto[]> {
+        const result: IMemberSchema[] = await MemberModel.find({post: postId})
+        return result.map(item => new MemberDto(item))
     }
 
     async leave(post: string, user: string): Promise<DeleteResult> {

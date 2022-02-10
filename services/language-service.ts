@@ -14,8 +14,9 @@ class CategoryService {
         const language: ILanguage = await LanguageModel.create({name, author: author.id})
         return new LanguageDto(language)
     }
-    async getAllLanguage(): Promise<ILanguage[]> {
-        return LanguageModel.find()
+    async getAllLanguage(): Promise<LanguageDto[]> {
+        const result: ILanguage[] = await LanguageModel.find()
+        return result.map(item => new LanguageDto(item))
     }
 
 }
