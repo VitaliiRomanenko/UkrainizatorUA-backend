@@ -41,7 +41,7 @@ class MemberController {
         try {
             const post: string | null = req.body.post
             if(!post){
-                return next(ApiError.BadRequest("Invalid user"))
+                return next(ApiError.BadRequest("Invalid post"))
             }
             const members: MemberDto[] = await MemberService.getAllPostMembers(post)
             res.json(members)

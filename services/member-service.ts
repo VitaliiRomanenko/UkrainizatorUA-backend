@@ -16,7 +16,7 @@ class MemberService {
     }
 
     async getAllUserMembers(userId: string): Promise<MemberDto[]> {
-        const result: IMemberSchema[] = await MemberModel.find({member: userId})
+        const result: IMemberSchema[] = await MemberModel.find({user: userId})
         return result.map(item => new MemberDto(item))
     }
 
