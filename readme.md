@@ -1,21 +1,21 @@
 
 
-#UkrainizatorUA API
+# UkrainizatorUA API
 `UkrainizatorUA API`: it's API for opensource project where people can connect and translate games, films, TV show, anything.
-#API
-##Users
-###Registration
+# API
+## Users
+### Registration
 Add new user to system, return user tokens, user data, set `refreshToken` in cookies
-####Request
+#### Request
 `POST /api/users/registration`
-#####body
+##### body
 ```json
 {
     "email": "some@gmail.com",
     "password": "password"
 }
 ```
-####Response
+#### Response
 ```json
 {
   "tokens": {
@@ -32,18 +32,18 @@ Add new user to system, return user tokens, user data, set `refreshToken` in coo
 }
 ```
 
-###Login
+### Login
 Return user tokens, user data, set `refreshToken` in cookies
-####Request
+#### Request
 `POST /api/users/login`
-#####body
+##### body
 ```json
 {
     "email": "some@gmail.com",
     "password": "password"
 }
 ```
-####Response
+#### Response
 ```json
 {
   "tokens": {
@@ -60,23 +60,23 @@ Return user tokens, user data, set `refreshToken` in cookies
 }
 ```
 
-###Logout
+### Logout
 Clear cookies
-####Request
+#### Request
 `POST /api/users/logout`
 
-####Response
+#### Response
 ```json
 {
   "message": "Success logout"
 }
 ```
-###Refresh
+### Refresh
 Return user tokens. Need `refreshToken` in cookies
-####Request
+#### Request
 `GET /api/users/refresh`
 
-####Response
+#### Response
 ```json
 {
   "tokens": {
@@ -92,12 +92,12 @@ Return user tokens. Need `refreshToken` in cookies
   }
 }
 ```
-###Get all users
+### Get all users
 Return users list. Need header `Authorization` and `"role": "admin"` 
-####Request
+#### Request
 `GET /api/users/all-users`
 
-####Response
+#### Response
 ```json
 [
   {
@@ -117,12 +117,12 @@ Return users list. Need header `Authorization` and `"role": "admin"`
 ]
 ```
 
-###Get user
+### Get user
 Return user data.
-####Request
+#### Request
 `GET /api/users/:userId`
 
-####Response
+#### Response
 ```json
 {
   "email": "some@gmail.com",
@@ -133,18 +133,18 @@ Return user data.
 }
 ```
 
-##Categories
-###Create
+## Categories
+### Create
 Add new category. Need header `Authorization`
-####Request
+#### Request
 `POST /api/posts/categories/create`
-#####body
+##### body
 ```json
 {
   "name": "Games"
 }
 ```
-####Response
+#### Response
 ```json
 {
   "id": "6201740a2a55f1f489544108",
@@ -152,12 +152,12 @@ Add new category. Need header `Authorization`
   "author": "6201749a2a55f1f48954410b"
 }
 ```
-###Get all
+### Get all
 Return all categories
-####Request
+#### Request
 `GET /api/posts/categories/`
 
-####Response
+#### Response
 ```json
 [
   {
@@ -173,18 +173,18 @@ Return all categories
 ]
 ```
 
-##Members
-###Create
+## Members
+### Create
 Creates a record of user participation in the project. Need header `Authorization`
-####Request
+#### Request
 `POST /api/posts/members/create`
-#####body
+##### body
 ```json
 {
   "post": "61f0737f99b700502edb4390"
 }
 ```
-####Response
+#### Response
 ```json
 {
   "id": "6201740a2a55f1f489544108",
@@ -192,30 +192,30 @@ Creates a record of user participation in the project. Need header `Authorizatio
   "user": "6201749a2a55f1f48954410b"
 }
 ```
-###Leave
+### Leave
 Deletes a record of user participation in the project. Need header `Authorization`
-####Request
+#### Request
 `POST /api/posts/members/leave`
-#####body
+##### body
 ```json
 {
   "post": "61f0737f99b700502edb4390"
 }
 ```
-####Response
+#### Response
 ```STATUS 200```
 
-###Get all projects in which the user is a participant
+### Get all projects in which the user is a participant
 Return all projects in which the user is a participant
-####Request
+#### Request
 `POST /api/posts/members/users-member`
-#####body
+##### body
 ```json
 {
   "user": "61f0737f99b700502edb4390"
 }
 ```
-####Response
+#### Response
 ```json
 [
   {
@@ -230,17 +230,17 @@ Return all projects in which the user is a participant
   }
 ]
 ```
-###Get all projects members
+### Get all projects members
 Return all projects members
-####Request
+#### Request
 `POST /api/posts/members/post-members`
-#####body
+##### body
 ```json
 {
   "post": "61f0737f99b700502edb4390"
 }
 ```
-####Response
+#### Response
 ```json
 [
   {
@@ -256,12 +256,12 @@ Return all projects members
 ]
 ```
 
-##Post
-###Create
+## Post
+### Create
 Creates new project. Need header `Authorization`
-####Request
+#### Request
 `POST /api/posts/post/create`
-#####body
+##### body
 ```json
 {
   "header": "Songs of Syx",
@@ -271,7 +271,7 @@ Creates new project. Need header `Authorization`
   "link": "https://crowdin.com/project/songs-of-syx/uk"
 }
 ```
-####Response
+#### Response
 ```json
 {
   "id": "61f0737f99b700502edb4390",
@@ -283,12 +283,12 @@ Creates new project. Need header `Authorization`
   "author": "6201749a2a55f1f48954410b"
 }
 ```
-###Get all
+### Get all
 Return all projects.
-####Request
+#### Request
 `GET /api/posts/post/`
 
-####Response
+#### Response
 ```json
 [
   {
@@ -312,12 +312,12 @@ Return all projects.
 ]
 ```
 
-###Get post
+### Get post
 Return post for id.
-####Request
+#### Request
 `GET /api/posts/post/:post`
 
-####Response
+#### Response
 ```json
 {
   "id": "61f0737f99b700502edb4390",
